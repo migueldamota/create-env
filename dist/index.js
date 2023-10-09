@@ -40,7 +40,7 @@ async function run() {
             core.warning("No environment variables were provided");
             return;
         }
-        vars = JSON.stringify(vars).replace(/\n/g, '');
+        vars = vars.replace(/\n/g, '');
         console.log({ vars });
         const envKeys = JSON.parse(vars);
         let content = "";
