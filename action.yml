@@ -1,0 +1,9 @@
+name: 'Create a .env file'
+author: 'Miguel da Mota'
+inputs:
+  name:
+    description: Filename of env file
+    default: '.env'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
