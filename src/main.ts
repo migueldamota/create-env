@@ -5,11 +5,13 @@ import * as path from "path";
 async function run() {
 
 	try {
-		const envKeys = Object.keys(process.env).filter((key) => key.startsWith("INPUT_"));
+		const envKeys = Object.keys(process.env)
+			.filter((key) => key.startsWith("INPUT_"))
+			.map((key) => key.replace("INPUT_", ""));
 
 		let content = "";
 
-		for (const key of envKeys) {
+		for (let key of envKeys) {
 			const value = process.env[key];
 
 			if (!value) {
