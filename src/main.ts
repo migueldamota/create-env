@@ -5,14 +5,21 @@ import * as path from "path";
 async function run() {
 
 	try {
-		const envKeys = Object.keys(process.env)
-			.filter((key) => key.startsWith("INPUT_"))
-			.map((key) => key.replace("INPUT_", ""));
+		const vars = core.getInput("env");
+
+		if (!vars) {
+			core.warning("No environment variables were provided");
+			return;
+		}
+
+		console.log({ vars });
+
+		const envKeys = JSON.parse(vars);
 
 		let content = "";
 
-		for (let key of envKeys) {
-			const value = process.env[key];
+		for (const key in envKeys) {
+			const value = envKeys[key];
 
 			if (!value) {
 				continue;
