@@ -35,11 +35,12 @@ const fs = __importStar(__nccwpck_require__(7147));
 const path = __importStar(__nccwpck_require__(1017));
 async function run() {
     try {
-        const vars = core.getInput("env");
+        let vars = core.getInput("env");
         if (!vars) {
             core.warning("No environment variables were provided");
             return;
         }
+        vars = vars.replace(/\n/g, '"');
         console.log({ vars });
         const envKeys = JSON.parse(vars);
         let content = "";

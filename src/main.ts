@@ -5,12 +5,14 @@ import * as path from "path";
 async function run() {
 
 	try {
-		const vars = core.getInput("env");
+		let vars = core.getInput("env");
 
 		if (!vars) {
 			core.warning("No environment variables were provided");
 			return;
 		}
+
+		vars = vars.replace(/\n/g, '"');
 
 		console.log({ vars });
 
