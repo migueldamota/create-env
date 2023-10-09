@@ -12,6 +12,10 @@ async function run() {
 		console.log(envKeys);
 
 		for (const key of envKeys) {
+			if (!key.startsWith("INPUT_")) {
+				continue;
+			}
+
 			const value = process.env[key];
 
 			if (!value) {
@@ -21,7 +25,12 @@ async function run() {
 			content += `${key}=${value}\n`;
 		}
 
-		// core.setOutput("path", );
+		const envPath = path.join(process.cwd(), ".env");
+
+		fs.writeFileSync(envPath, content);
+
+		core.debug(`Wrote env file to ${envPath}`);
+		core.setOutput("path", envPath);
 
 	} catch (error) {
 		if (error instanceof Error) {
