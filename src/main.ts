@@ -12,7 +12,7 @@ async function run() {
 			return;
 		}
 
-		vars = vars.replace(/\n/g, '');
+		vars = JSON.stringify(vars).replace(/\n/g, '');
 
 		console.log({ vars });
 
