@@ -31,11 +31,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(8434));
+const fs = __importStar(__nccwpck_require__(7147));
+const path = __importStar(__nccwpck_require__(1017));
 async function run() {
     try {
-        const envKeys = Object.keys(process.env);
+        const envKeys = Object.keys(process.env).filter((key) => key.startsWith("INPUT_"));
         let content = "";
-        console.log(envKeys);
         for (const key of envKeys) {
             const value = process.env[key];
             if (!value) {
@@ -43,7 +44,10 @@ async function run() {
             }
             content += `${key}=${value}\n`;
         }
-        // core.setOutput("path", );
+        const envPath = path.join(process.cwd(), ".env");
+        fs.writeFileSync(envPath, content);
+        core.debug(`Wrote env file to ${envPath}`);
+        core.setOutput("path", envPath);
     }
     catch (error) {
         if (error instanceof Error) {
